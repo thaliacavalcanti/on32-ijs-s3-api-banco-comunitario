@@ -1,4 +1,4 @@
 export enum TipoContaBancaria {
-    POUPANCA = "POUPANCA",
-    CORRENTE = "CORRENTE"
+  POUPANCA = 'POUPANCA',
+  CORRENTE = 'CORRENTE',
 }

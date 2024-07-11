@@ -24,25 +24,38 @@ export class BancoController {
   }
 
   @Get('clientes/:clienteId')
-  encontrarClientePorId(@Param('clienteId') clienteId: string): Partial<Cliente> {
+  encontrarClientePorId(
+    @Param('clienteId') clienteId: string,
+  ): Partial<Cliente> {
     return this.bancoService.encontrarClientePorId(clienteId);
   }
 
   @Post('gerentes/:gerenteId/clientes/:clienteId')
-  adicionarClienteAoGerente(@Param('gerenteId') gerenteId: string, @Param('clienteId') clienteId: string) {
+  adicionarClienteAoGerente(
+    @Param('gerenteId') gerenteId: string,
+    @Param('clienteId') clienteId: string,
+  ) {
     this.bancoService.adicionarClienteAoGerente(gerenteId, clienteId);
   }
 
   @Post('clientes/:clienteId/contas')
-  abrirContaParaCliente(@Param('clienteId') clienteId: string, @Body() body: { saldo: number, tipoConta: string }) {
+  abrirContaParaCliente(
+    @Param('clienteId') clienteId: string,
+    @Body() body: { saldo: number; tipoConta: string },
+  ) {
     const { saldo, tipoConta } = body;
-    const _tipoConta = tipoConta === TipoContaBancaria.CORRENTE ? TipoContaBancaria.CORRENTE : TipoContaBancaria.POUPANCA
+    const _tipoConta =
+      tipoConta === TipoContaBancaria.CORRENTE
+        ? TipoContaBancaria.CORRENTE
+        : TipoContaBancaria.POUPANCA;
     this.bancoService.abrirContaParaCliente(clienteId, saldo, _tipoConta);
   }
 
   @Delete('clientes/:clienteId/contas/:contaId')
-  fecharContaCliente(@Param('clienteId') clienteId: string, @Param('contaId') contaId: string): void {
+  fecharContaCliente(
+    @Param('clienteId') clienteId: string,
+    @Param('contaId') contaId: string,
+  ): void {
     this.bancoService.fecharConta(clienteId, contaId);
   }
-
 }
