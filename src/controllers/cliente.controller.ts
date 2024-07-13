@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Patch,
+} from '@nestjs/common';
 import { TipoContaBancaria } from 'src/enums/tipo-conta-bancaria.enum';
 import { Cliente } from 'src/models/cliente.model';
 import { ClienteService } from 'src/services/cliente.service';
@@ -38,5 +46,23 @@ export class ClienteController {
     @Param('contaId') contaId: string,
   ): void {
     this.clienteService.fecharConta(clienteId, contaId);
+  }
+
+  @Get(':clienteId/taxa-de-juros')
+  calcularTaxaDeJuros(@Param('clienteId') clienteId: string): {
+    taxaDeJuros: number;
+  } {
+    const taxaDeJuros = this.clienteService.calcularTaxaDeJuros(clienteId);
+    return {
+      taxaDeJuros,
+    };
+  }
+
+  @Patch(':clienteId/mudar-tipo-conta/:contaId')
+  mudarTipoConta(
+    @Param('clienteId') clienteId: string,
+    @Param('contaId') contaId,
+  ) {
+    this.clienteService.mudarTipoConta(clienteId, contaId);
   }
 }

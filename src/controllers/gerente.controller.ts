@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { Gerente } from 'src/models/gerente.model';
 import { GerenteService } from 'src/services/gerente.service';
 
@@ -22,5 +22,13 @@ export class BancoController {
     @Param('clienteId') clienteId: string,
   ) {
     this.gerenteService.adicionarClienteAoGerente(gerenteId, clienteId);
+  }
+
+  @Delete('gerentes/:gerenteId/clientes/:clienteId')
+  removeClienteDoGerente(
+    @Param('gerenteId') gerenteId: string,
+    @Param('clienteId') clienteId: string,
+  ) {
+    this.gerenteService.removeClienteDoGerente(gerenteId, clienteId);
   }
 }

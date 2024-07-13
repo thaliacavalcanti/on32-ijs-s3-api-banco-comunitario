@@ -44,4 +44,26 @@ export class ClienteService {
     const conta = cliente.contas.find((conta) => conta.id === contaId);
     cliente.fecharConta(conta);
   }
+
+  calcularTaxaDeJuros(clienteId: string): number {
+    const contas = this.encontrarClientePorId(clienteId).contas || [];
+    const contaPoupanca = contas.find(
+      (conta) => conta.tipo === TipoContaBancaria.POUPANCA,
+    );
+
+    if (contaPoupanca instanceof ContaPoupanca) {
+      return contaPoupanca.calcularTaxa();
+    }
+    return 0;
+  }
+
+  mudarTipoConta(clienteId: string, contaId: string) {
+    const cliente = this.encontrarClientePorId(clienteId);
+    const conta = cliente.contas.find((conta) => conta.id === contaId);
+    const novoTipoConta =
+      conta.tipo === TipoContaBancaria.CORRENTE
+        ? TipoContaBancaria.POUPANCA
+        : TipoContaBancaria.CORRENTE;
+    cliente.mudarTipoConta(conta, novoTipoConta);
+  }
 }

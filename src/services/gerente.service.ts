@@ -13,7 +13,7 @@ export class GerenteService {
 
   criarGerente({ nomeCompleto }: Gerente): Gerente {
     const gerente = new Gerente(nomeCompleto, randomUUID());
-    this.bancoDeDados.gerentes.push(gerente);
+    this.bancoDeDados.cadastrarGerente(gerente);
     return gerente;
   }
 
@@ -31,7 +31,7 @@ export class GerenteService {
   }
 
   encontrarGerentePorId(id: string): Gerente {
-    return this.bancoDeDados.gerentes.find((gerente) => gerente.id === id);
+    return this.bancoDeDados.encontrarGerentePorId(id);
   }
 
   encontrarClientePorId(id: string): Cliente {
@@ -61,5 +61,11 @@ export class GerenteService {
     const cliente = this.encontrarClientePorId(clienteId);
     const conta = cliente.contas.find((conta) => conta.id === contaId);
     cliente.fecharConta(conta);
+  }
+
+  removeClienteDoGerente(gerenteId: string, clienteId: string): void {
+    const cliente = this.encontrarClientePorId(clienteId);
+    const gerente = this.encontrarGerentePorId(gerenteId);
+    gerente.removerCliente(cliente);
   }
 }

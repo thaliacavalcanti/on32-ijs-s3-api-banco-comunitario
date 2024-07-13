@@ -4,7 +4,7 @@ import { Gerente } from 'src/models/gerente.model';
 
 @Injectable()
 export class BancoDeDados {
-  gerentes: Gerente[] = [];
+  private gerentes: Gerente[] = [];
   private clientes: Cliente[] = [];
 
   encontrarClientePorId(id: string): Cliente {
@@ -13,5 +13,13 @@ export class BancoDeDados {
 
   cadastrarCliente(cliente: Cliente) {
     this.clientes.push(cliente);
+  }
+
+  cadastrarGerente(gerente: Gerente) {
+    this.gerentes.push(gerente);
+  }
+
+  encontrarGerentePorId(id: string): Gerente {
+    return this.gerentes.find((gerente) => gerente.id === id);
   }
 }
